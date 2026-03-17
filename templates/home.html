@@ -87,3 +87,34 @@
 {% endblock %}
 
 {% block content %}
+<div class="hero">
+  <div class="hero-tag">CSC 202 • Final CA</div>
+  <h1>Test Your <em>CS Knowledge</em></h1>
+  <p>{{ total_questions }} questions across OOP, Data Structures, Algorithms, Python, and more.</p>
+  <div class="stats-row">
+    <div class="stat-pill"><span>{{ total_questions }}</span> Questions</div>
+    <div class="stat-pill"><span>20</span> Minutes</div>
+    <div class="stat-pill"><span>{{ results_history|length if results_history else 0 }}</span> Tests Taken</div>
+  </div>
+  <a href="/test" class="btn btn-primary">Start Test →</a>
+</div>
+
+<div>
+  <div class="section-title">Recent Results</div>
+  {% if recent %}
+  <div class="recent-grid">
+    {% for r in recent %}
+    <div class="recent-card">
+      <div>
+        <div class="recent-name">{{ r.student_name }}</div>
+        <div class="recent-meta">{{ r.get_formatted_timestamp() }} · {{ r.score }}/{{ r.total }} correct</div>
+      </div>
+      <div class="grade-badge grade-{{ r.get_grade() }}">{{ r.get_grade() }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="card empty-state">No tests submitted yet. Be the first! 🚀</div>
+  {% endif %}
+</div>
+{% endblock %}
