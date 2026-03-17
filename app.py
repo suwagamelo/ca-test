@@ -46,3 +46,25 @@ def test():
 
 
 
+
+
+@app.route("/result")
+def result():
+    """Result page: shows timestamped score and per-question breakdown."""
+    idx = session.get("last_result_index")
+    if idx is None or idx >= len(results_history):
+        return redirect(url_for("home"))
+
+    res = results_history[idx]
+    return render_template("result.html", result=res)
+
+
+@app.route("/history")
+def history():
+    """History page: shows all past results (stack view — most recent first)."""
+    all_results = list(reversed(results_history))
+    return render_template("history.html", results=all_results)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
